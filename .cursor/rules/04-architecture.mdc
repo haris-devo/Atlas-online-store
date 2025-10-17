@@ -1,9 +1,6 @@
 ---
-title: Architecture Patterns
-type: always
-description: Clean architecture and design patterns for the project
+alwaysApply: true
 ---
-
 # Architecture Patterns
 
 ## Project Structure

@@ -1,26 +1,31 @@
 # Tailwind CSS v4 Migration Summary
 
-This document outlines the migration from Tailwind CSS v3 to v4 in the CodeHuddle Frontend Boilerplate.
+This document outlines the migration from Tailwind CSS v3 to v4 in the Atlas Online Store.
 
 ## Changes Made
 
 ### 1. Dependencies Updated
 
 **Updated:**
+
 - `tailwindcss`: `^3.4.16` → `^4.0.0`
 
 **Added:**
+
 - `@tailwindcss/postcss`: `^4.0.0` - New dedicated PostCSS plugin for Tailwind v4
 
 **Removed:**
+
 - `tailwindcss-animate`: `^1.0.7` - No longer needed as Tailwind v4 has built-in animation support
 
 ### 2. Configuration Migration
 
 #### Removed Files
+
 - `tailwind.config.ts` - JavaScript configuration is no longer used in v4
 
 #### Updated Files
+
 - `postcss.config.js` - Updated to use `@tailwindcss/postcss` instead of `tailwindcss`
 
 ### 3. CSS-First Configuration
@@ -30,6 +35,7 @@ Tailwind CSS v4 introduces a CSS-first configuration approach using the `@theme`
 #### Key Changes in `global.css`:
 
 **Import Directives:**
+
 ```css
 /* Old v3 syntax */
 @tailwind base;
@@ -37,7 +43,7 @@ Tailwind CSS v4 introduces a CSS-first configuration approach using the `@theme`
 @tailwind utilities;
 
 /* New v4 syntax */
-@import 'tailwindcss';
+@import "tailwindcss";
 ```
 
 **Theme Configuration:**
@@ -49,19 +55,22 @@ All theme customizations (fonts, colors, spacing, animations, etc.) are now defi
   --color-primary: oklch(0% 0 0);
   --spacing-18: 4.5rem;
   /* ... etc */
-}
+}
 ```
 
 **Color Format:**
+
 - Migrated from HSL to OKLCH color format for better color accuracy
 - Example: `hsl(var(--background))` → `oklch(100% 0 0)`
 
 ### 4. Utility Class Updates
 
 **Removed Deprecated Utilities:**
+
 - `ring-offset-background` and `ring-offset-2` - Removed from all components as they're handled differently in v4
 
 **Files Updated:**
+
 - `src/components/ui/input.tsx`
 - `src/components/ui/tabs.tsx`
 - `src/components/ui/dialog.tsx`
@@ -87,7 +96,7 @@ All custom animations and keyframes have been migrated to the `@theme` block:
       opacity: 1;
     }
   }
-}
+}
 ```
 
 ## Benefits of Tailwind v4

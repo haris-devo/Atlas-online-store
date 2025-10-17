@@ -1,18 +1,23 @@
-# Code-huddle | Boilerplate and Starter for Next.js 15+, Tailwind CSS 3.4, and TypeScript.
+# Atlas Online Store
 
-🚀 Boilerplate and Starter for Next.js with App Router, Tailwind CSS, and TypeScript ⚡️ Prioritizing developer experience first: Next.js, TypeScript, ESLint, Prettier, Husky, Lint-Staged, Vitest (replacing Jest), Testing Library, Playwright, Commitlint, VSCode, Tailwind CSS, Logging with Pino.js and Log Management, Monitoring as Code, Storybook, Multi-language (i18n), and more.
+🛒 A modern e-commerce platform built with Next.js 15+, TypeScript, and Tailwind CSS ⚡️ Featuring a complete online store solution with product management, user authentication, shopping cart, and payment processing.
 
-Clone this project and use it to create your own Next.js project.
+Atlas Online Store is a production-ready e-commerce platform designed for modern businesses.
 
 ### Demo
 
-| Sign Up | Sign In |
-| --- | --- |
-| [![Next.js Boilerplate SaaS Sign Up](public/assets/images/nextjs-boilerplate-sign-in.png)](https://demo.nextjs-boilerplate.com/sign-up) | [![Next.js Boilerplate SaaS Sign In](public/assets/images/nextjs-boilerplate-sign-in.png)](https://demo.nextjs-boilerplate.com/sign-in) |
+| Sign Up                                                                                                                           | Sign In                                                                                                                           |
+| --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| [![Atlas Online Store Sign Up](public/assets/images/nextjs-boilerplate-sign-in.png)](https://demo.atlas-online-store.com/sign-up) | [![Atlas Online Store Sign In](public/assets/images/nextjs-boilerplate-sign-in.png)](https://demo.atlas-online-store.com/sign-in) |
 
 ### Features
 
-Developer experience first, extremely flexible code structure and only keep what you need:
+Complete e-commerce solution with modern development practices:
+
+- 🛒 **E-commerce Features**: Product catalog, shopping cart, checkout, order management
+- 💳 **Payment Processing**: Stripe integration for secure payments
+- 👤 **User Management**: Authentication, user profiles, order history
+- 📦 **Product Management**: Admin dashboard for inventory management
 
 - ⚡ [Next.js](https://nextjs.org) with App Router support
 - 🔥 Type checking [TypeScript](https://www.typescriptlang.org)
@@ -74,8 +79,8 @@ Built-in feature from Next.js:
 Run the following command on your local environment:
 
 ```shell
-git clone --depth=1 https://github.com/Code-Huddle/nextjs-boilerplate-latest.git
-cd my-project-name
+git clone --depth=1 https://github.com/Code-Huddle/atlas-online-store.git
+cd atlas-online-store
 npm install
 ```
 
@@ -94,8 +99,8 @@ Open http://localhost:3000 with your favorite browser to see your project.
 To build and run the app in production mode with Docker:
 
 ```bash
-docker build -t nextjs-boilerplate .
-docker run -p 3000:3000 nextjs-boilerplate
+docker build -t atlas-online-store .
+docker run -p 3000:3000 atlas-online-store
 ```
 
 For local development with hot reload, use Docker Compose:
@@ -149,7 +154,7 @@ After defining the environment variables in your GitHub Actions, your localizati
 
 ### Customization
 
-You can easily configure Next js Boilerplate by searching the entire project for `FIXME:` to make quick customizations. Here are some of the most important files to customize:
+You can easily configure Atlas Online Store by searching the entire project for `FIXME:` to make quick customizations. Here are some of the most important files to customize:
 
 - `public/apple-touch-icon.png`, `public/favicon.ico`, `public/favicon-16x16.png` and `public/favicon-32x32.png`: your website favicon
 - `src/utils/AppConfig.ts`: configuration file
@@ -165,15 +170,25 @@ This project uses [TanStack Query](https://tanstack.com/query/latest) for data f
 
 ```tsx
 // src/libs/queryClient.ts
-'use client';
-import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useState } from 'react';
+"use client";
+import {
+  HydrationBoundary,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { useState } from "react";
 
 export function QueryClientProvider({ children, dehydratedState }) {
   const [queryClient] = useState(() => new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
-      {dehydratedState ? <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary> : children}
+      {dehydratedState ? (
+        <HydrationBoundary state={dehydratedState}>
+          {children}
+        </HydrationBoundary>
+      ) : (
+        children
+      )}
     </QueryClientProvider>
   );
 }
@@ -182,10 +197,10 @@ export function QueryClientProvider({ children, dehydratedState }) {
 Use `useQuery` in client components to replace manual `fetch` calls:
 
 ```tsx
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 
 function RandomJoke() {
-  const { data } = useQuery({ queryKey: ['joke'], queryFn: fetchJoke });
+  const { data } = useQuery({ queryKey: ["joke"], queryFn: fetchJoke });
   return <div>{data?.value}</div>;
 }
 ```
@@ -226,11 +241,11 @@ In the local environment, visual testing is disabled, and the terminal will disp
 The App Router folder is compatible with the Edge runtime. You can enable it by adding the following lines `src/app/layouts.tsx`:
 
 ```tsx
-export const runtime = 'edge';
+export const runtime = "edge";
 ```
 
 ```tsx
-await migrate(db, { migrationsFolder: './migrations' });
+await migrate(db, { migrationsFolder: "./migrations" });
 ```
 
 After disabling it, you are required to run the migration manually with:
@@ -251,7 +266,7 @@ Then, you can generate a production build with:
 $ npm run build
 ```
 
-It generates an optimized production build of the boilerplate. To test the generated build, run:
+It generates an optimized production build of Atlas Online Store. To test the generated build, run:
 
 ```shell
 $ npm run start
@@ -261,7 +276,7 @@ This command starts a local server using the production build. You can now open 
 
 ### Code coverage
 
-Next.js Boilerplate relies on [Codecov](https://about.codecov.io/codecov-free-trial/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo) for code coverage reporting solution. To enable Codecov, create a Codecov account and connect it to your GitHub account. Your repositories should appear on your Codecov dashboard. Select the desired repository and copy the token. In GitHub Actions, define the `CODECOV_TOKEN` environment variable and paste the token.
+Atlas Online Store relies on [Codecov](https://about.codecov.io/codecov-free-trial/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo) for code coverage reporting solution. To enable Codecov, create a Codecov account and connect it to your GitHub account. Your repositories should appear on your Codecov dashboard. Select the desired repository and copy the token. In GitHub Actions, define the `CODECOV_TOKEN` environment variable and paste the token.
 
 Make sure to create `CODECOV_TOKEN` as a GitHub Actions secret, do not paste it directly into your source code.
 
@@ -285,7 +300,7 @@ To complete the setup, update the `checkly.config.ts` file with your own email a
 
 #### Bundle Analyzer
 
-Next.js Boilerplate includes a built-in bundle analyzer. It can be used to analyze the size of your JavaScript bundles. To begin, run the following command:
+Atlas Online Store includes a built-in bundle analyzer. It can be used to analyze the size of your JavaScript bundles. To begin, run the following command:
 
 ```shell
 npm run build-stats

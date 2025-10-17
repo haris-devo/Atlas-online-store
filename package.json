@@ -1,7 +1,7 @@
 {
   "name": "atlas-online-store",
   "version": "1.0.0",
-  "description": "A modern Next.js boilerplate with TypeScript, Tailwind CSS, and authentication built by CodeHuddle",
+  "description": "Atlas Online Store - A modern e-commerce platform built with Next.js, TypeScript, and Tailwind CSS",
   "author": "CodeHuddle <harisahmed629@gmail.com>",
   "engines": {
     "node": ">=20.0.0"

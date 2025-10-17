@@ -8,12 +8,12 @@
     "sign_up_link": "Sign up"
   },
   "BaseTemplate": {
-    "description": "Modern Next.js boilerplate with TypeScript, Tailwind CSS, and authentication built by CodeHuddle",
+    "description": "Modern e-commerce platform with TypeScript, Tailwind CSS, and authentication built by CodeHuddle",
     "made_with": "Made with <author></author>."
   },
   "Index": {
-    "meta_title": "CodeHuddle - Modern Web Development Boilerplate",
-    "meta_description": "A modern Next.js boilerplate with TypeScript, Tailwind CSS, and authentication built by CodeHuddle."
+    "meta_title": "Atlas Online Store - Modern E-commerce Platform",
+    "meta_description": "A modern e-commerce platform built with Next.js, TypeScript, Tailwind CSS, and authentication."
   },
   "Counter": {
     "meta_title": "Counter",

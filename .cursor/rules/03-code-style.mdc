@@ -1,9 +1,6 @@
 ---
-title: Code Style and Formatting
-type: always
-description: Consistent code style and formatting rules
+alwaysApply: true
 ---
-
 # Code Style and Formatting
 
 ## General Principles
