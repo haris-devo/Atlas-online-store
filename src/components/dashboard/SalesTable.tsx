@@ -25,7 +25,7 @@ export function SalesTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {rows.map((r) => (
+            {rows.map(r => (
               <TableRow key={r.id}>
                 <TableCell className="font-medium">{r.id}</TableCell>
                 <TableCell>{r.customer}</TableCell>
@@ -39,5 +39,3 @@ export function SalesTable() {
     </Card>
   );
 }
-
-

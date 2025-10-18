@@ -1,3 +1,5 @@
+import type { ReactElement } from 'react';
+
 type MiniChartProps = {
   values: number[];
   color?: string;
@@ -28,15 +30,18 @@ export function MiniChart({
     return { x, y };
   });
 
-  const polylinePoints = points.map((p) => `${p.x},${p.y}`).join(' ');
+  const polylinePoints = points.map(p => `${p.x},${p.y}`).join(' ');
 
-  const areaPath = `M ${points[0]?.x ?? padding},${height - padding} ` +
-    `L ${polylinePoints} ` +
-    `L ${points[points.length - 1]?.x ?? padding},${height - padding} Z`;
+  const areaPath
+    = `M ${points[0]?.x ?? padding},${height - padding} `
+      + `L ${polylinePoints} `
+      + `L ${points[points.length - 1]?.x ?? padding},${height - padding} Z`;
 
   const gridLines = (() => {
-    if (!showGrid) return null;
-    const lines = [] as JSX.Element[];
+    if (!showGrid) {
+      return null;
+    }
+    const lines = [] as ReactElement[];
     const horizontalCount = 3;
     for (let i = 1; i <= horizontalCount; i++) {
       const y = padding + ((height - padding * 2) / (horizontalCount + 1)) * i;
@@ -50,7 +55,7 @@ export function MiniChart({
           stroke="currentColor"
           opacity={0.08}
           strokeWidth={1}
-        />
+        />,
       );
     }
     return lines;
@@ -81,5 +86,3 @@ export function MiniChart({
     </svg>
   );
 }
-
-

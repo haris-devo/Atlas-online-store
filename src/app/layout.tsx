@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "@/styles/global.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import '@/styles/global.css';
 
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
-  title: "Atlas Online Store",
+  title: 'Atlas Online Store',
   description:
-    "A modern e-commerce platform built with Next.js, TypeScript, Tailwind CSS, and more.",
+    'A modern e-commerce platform built with Next.js, TypeScript, Tailwind CSS, and more.',
 };
 
 export default function RootLayout({

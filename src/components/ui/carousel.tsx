@@ -60,8 +60,13 @@ const Carousel = (
       return;
     }
 
-    setCanScrollPrev(api.canScrollPrev());
-    setCanScrollNext(api.canScrollNext());
+    const canPrev = api.canScrollPrev();
+    const canNext = api.canScrollNext();
+
+    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect -- This is called from event handlers, not directly from useEffect
+    setCanScrollPrev(canPrev);
+    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect -- This is called from event handlers, not directly from useEffect
+    setCanScrollNext(canNext);
   }, []);
 
   const scrollPrev = React.useCallback(() => {
@@ -107,20 +112,29 @@ const Carousel = (
     };
   }, [api, onSelect]);
 
+  const contextValue = React.useMemo(() => ({
+    carouselRef,
+    api,
+    opts,
+    orientation:
+        orientation || (opts?.axis === 'y' ? 'vertical' : 'horizontal'),
+    scrollPrev,
+    scrollNext,
+    canScrollPrev,
+    canScrollNext,
+  }), [
+    carouselRef,
+    api,
+    opts,
+    orientation,
+    scrollPrev,
+    scrollNext,
+    canScrollPrev,
+    canScrollNext,
+  ]);
+
   return (
-    <CarouselContext
-      value={{
-        carouselRef,
-        api,
-        opts,
-        orientation:
-            orientation || (opts?.axis === 'y' ? 'vertical' : 'horizontal'),
-        scrollPrev,
-        scrollNext,
-        canScrollPrev,
-        canScrollNext,
-      }}
-    >
+    <CarouselContext value={contextValue}>
       <div
         ref={ref}
         onKeyDownCapture={handleKeyDown}

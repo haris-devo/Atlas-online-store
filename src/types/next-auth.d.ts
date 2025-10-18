@@ -1,3 +1,4 @@
+import type { DefaultSession, DefaultUser } from 'next-auth';
 import type { JWT as DefaultJWT } from 'next-auth/jwt';
 
 declare module 'next-auth' {
@@ -7,17 +8,17 @@ declare module 'next-auth' {
       email: string;
       name: string;
       role?: string;
-    };
+    } & DefaultSession['user'];
     accessToken?: string;
     error?: string;
-  };
+  } & DefaultSession;
 
   type User = {
     role?: string;
     accessToken?: string;
     refreshToken?: string;
     accessTokenExpires?: number;
-  };
+  } & DefaultUser;
 }
 
 declare module 'next-auth/jwt' {
@@ -34,5 +35,3 @@ declare module 'next-auth/jwt' {
     error?: string;
   } & DefaultJWT;
 }
-
-

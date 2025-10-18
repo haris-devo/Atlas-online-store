@@ -1,13 +1,19 @@
 'use client';
 
-import Link from 'next/link';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 import { useState } from 'react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export function SignInForm() {
   const [email, setEmail] = useState('');
@@ -31,7 +37,7 @@ export function SignInForm() {
       } else {
         setMessage('Successfully signed in!');
       }
-    } catch (_error) {
+    } catch {
       setMessage('An error occurred during sign in');
     } finally {
       setLoading(false);
@@ -43,13 +49,24 @@ export function SignInForm() {
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
       <CardHeader className="relative z-10 pb-6 text-center">
-        <CardTitle className="text-2xl font-bold text-foreground">Welcome Back</CardTitle>
-        <CardDescription className="text-muted-foreground">Sign in to your account to continue</CardDescription>
+        <CardTitle className="text-2xl font-bold text-foreground">
+          Welcome Back
+        </CardTitle>
+        <CardDescription className="text-muted-foreground">
+          Sign in to your account to continue
+        </CardDescription>
       </CardHeader>
 
       <CardContent className="relative z-10 space-y-6">
         {message && (
-          <Alert variant={message.toLowerCase().includes('error') || message.toLowerCase().includes('invalid') ? 'destructive' : 'default'}>
+          <Alert
+            variant={
+              message.toLowerCase().includes('error')
+              || message.toLowerCase().includes('invalid')
+                ? 'destructive'
+                : 'default'
+            }
+          >
             <AlertDescription>{message}</AlertDescription>
           </Alert>
         )}

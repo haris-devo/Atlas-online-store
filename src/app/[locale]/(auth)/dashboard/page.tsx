@@ -1,11 +1,11 @@
+import { ActivityTimeline } from '@/components/dashboard/ActivityTimeline';
+import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import { KpiCard } from '@/components/dashboard/KpiCard';
 import { MiniChart } from '@/components/dashboard/MiniChart';
 import { SalesTable } from '@/components/dashboard/SalesTable';
-import { ActivityTimeline } from '@/components/dashboard/ActivityTimeline';
-import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
 
 type IPageProps = {
   params: Promise<{ locale: string }>;
@@ -99,5 +99,3 @@ export default async function DashboardPage(_props: IPageProps) {
     </div>
   );
 }
-
-

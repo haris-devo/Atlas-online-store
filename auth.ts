@@ -5,7 +5,9 @@ import Credentials from 'next-auth/providers/credentials';
 import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 
-const API_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://honest-dog-dev-104c88de45c2.herokuapp.com/api';
+const API_URL
+  = process.env.NEXT_PUBLIC_SERVER_URL
+    || 'https://honest-dog-dev-104c88de45c2.herokuapp.com/api';
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -47,7 +49,8 @@ export const authConfig: NextAuthConfig = {
             role: data.user.role,
             accessToken: data.tokens.access_token,
             refreshToken: data.tokens.refresh_token,
-            accessTokenExpires: Date.now() + data.tokens.access_token_expires_in * 1000,
+            accessTokenExpires:
+              Date.now() + data.tokens.access_token_expires_in * 1000,
           };
         } catch (error) {
           console.error('Credentials authentication error:', error);
@@ -62,7 +65,10 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {
-        token.accessToken = account.provider === 'credentials' ? user.accessToken : account.access_token;
+        token.accessToken
+          = account.provider === 'credentials'
+            ? user.accessToken
+            : account.access_token;
         token.refreshToken = user.refreshToken;
         token.accessTokenExpires = user.accessTokenExpires;
         token.user = {
@@ -73,7 +79,11 @@ export const authConfig: NextAuthConfig = {
         };
       }
 
-      if (token.accessTokenExpires && typeof token.accessTokenExpires === 'number' && Date.now() < token.accessTokenExpires) {
+      if (
+        token.accessTokenExpires
+        && typeof token.accessTokenExpires === 'number'
+        && Date.now() < token.accessTokenExpires
+      ) {
         return token;
       }
 
@@ -89,7 +99,11 @@ export const authConfig: NextAuthConfig = {
       }
       token.accessTokenExpires = Date.now() + 15 * 24 * 60 * 60 * 1000; // 15 days ago
 
-      if (token.accessTokenExpires && typeof token.accessTokenExpires === 'number' && Date.now() < token.accessTokenExpires) {
+      if (
+        token.accessTokenExpires
+        && typeof token.accessTokenExpires === 'number'
+        && Date.now() < token.accessTokenExpires
+      ) {
         session.accessToken = token.accessToken;
         session.error = undefined;
         return session;

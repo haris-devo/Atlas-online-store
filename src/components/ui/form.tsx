@@ -33,8 +33,10 @@ const FormField = <
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
+  const contextValue = React.useMemo(() => ({ name: props.name }), [props.name]);
+
   return (
-    <FormFieldContext value={{ name: props.name }}>
+    <FormFieldContext value={contextValue}>
       <Controller {...props} />
     </FormFieldContext>
   );
@@ -73,9 +75,10 @@ const useFormField = () => {
 
 const FormItem = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const id = React.useId();
+  const contextValue = React.useMemo(() => ({ id }), [id]);
 
   return (
-    <FormItemContext value={{ id }}>
+    <FormItemContext value={contextValue}>
       <div ref={ref} className={cn('space-y-2', className)} {...props} />
     </FormItemContext>
   );

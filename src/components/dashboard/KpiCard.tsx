@@ -25,5 +25,3 @@ export function KpiCard({ title, value, change, icon }: KpiCardProps) {
     </Card>
   );
 }
-
-

@@ -1,68 +1,58 @@
 {
   "compilerOptions": {
+    "incremental": true,
+    "target": "es2017",
+    "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "strict": true,
-    "alwaysStrict": true,
-    "strictNullChecks": true,
-    "noUncheckedIndexedAccess": true,
-
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "allowUnreachableCode": false,
-    "noFallthroughCasesInSwitch": true,
-
-    "target": "es2017",
-    "outDir": "out",
-    "sourceMap": true,
-
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "checkJs": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "jsx": "preserve",
-    "noEmit": true,
-    "isolatedModules": true,
-    "incremental": true,
-
-    // Load types
-    "types": ["vitest/globals"],
-
-    // Path aliases
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@/public/*": ["./public/*"]
     },
-
-    // Editor support
+    "resolveJsonModule": true,
+    "types": ["vitest/globals"],
+    "allowJs": true,
+    "checkJs": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "allowUnreachableCode": false,
+    "alwaysStrict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmit": true,
+    "outDir": "out",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
     "plugins": [
       {
         "name": "next"
       }
     ]
   },
-  "exclude": [
-    "./out/**/*",
-    ".vscode/node_modules/**/*",
-    "**/*.spec.ts",
-    "**/*.e2e.ts"
-  ],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     "**/*.mts"
+  ],
+  "exclude": [
+    "./out/**/*",
+    ".vscode/node_modules/**/*",
+    "**/*.spec.ts",
+    "**/*.e2e.ts"
   ]
 }

@@ -2,11 +2,17 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -34,7 +40,7 @@ export function SignUpForm() {
     try {
       // Keep logic unchanged: just reflect a friendly message placeholder
       setMessage('Successfully signed up! Please sign in.');
-    } catch (error) {
+    } catch {
       setMessage('An error occurred during sign up');
     } finally {
       setLoading(false);
@@ -56,7 +62,14 @@ export function SignUpForm() {
 
       <CardContent className="relative z-10 space-y-6">
         {message && (
-          <Alert variant={message.toLowerCase().includes('error') || message.toLowerCase().includes('failed') ? 'destructive' : 'default'}>
+          <Alert
+            variant={
+              message.toLowerCase().includes('error')
+              || message.toLowerCase().includes('failed')
+                ? 'destructive'
+                : 'default'
+            }
+          >
             <AlertDescription>{message}</AlertDescription>
           </Alert>
         )}

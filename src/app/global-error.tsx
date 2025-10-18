@@ -1,18 +1,19 @@
 'use client';
 
-import { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import AlertTriangle from 'lucide-react/dist/esm/icons/alert-triangle';
 import Home from 'lucide-react/dist/esm/icons/home';
 import RefreshCw from 'lucide-react/dist/esm/icons/refresh-cw';
-import AlertTriangle from 'lucide-react/dist/esm/icons/alert-triangle';
+import Link from 'next/link';
+import { useEffect } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { routing } from '@/libs/i18nNavigation';
 
-interface GlobalErrorProps {
+type GlobalErrorProps = {
   error: Error & { digest?: string };
   reset: () => void;
-}
+};
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
   useEffect(() => {
@@ -48,30 +49,35 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
                     </pre>
                     {error.digest && (
                       <p className="text-xs text-red-600 dark:text-red-400 mt-2">
-                        Error ID: {error.digest}
+                        Error ID:
+                        {' '}
+                        {error.digest}
                       </p>
                     )}
                   </div>
                 )}
-                
+
                 <div className="flex flex-col gap-2">
                   <Button onClick={reset} className="w-full">
                     <RefreshCw className="mr-2 h-4 w-4" />
                     Try Again
                   </Button>
-                  
+
                   <Button variant="outline" asChild className="w-full">
-                    <a href="/">
+                    <Link href="/">
                       <Home className="mr-2 h-4 w-4" />
                       Go Home
-                    </a>
+                    </Link>
                   </Button>
                 </div>
-                
+
                 <div className="text-center text-xs text-muted-foreground">
                   <p>If this problem persists, please contact support.</p>
                   {error.digest && (
-                    <p className="mt-1">Reference: {error.digest}</p>
+                    <p className="mt-1">
+                      Reference:
+                      {error.digest}
+                    </p>
                   )}
                 </div>
               </CardContent>

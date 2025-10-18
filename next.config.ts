@@ -1,6 +1,6 @@
-import withPWA from 'next-pwa';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import createNextIntlPlugin from 'next-intl/plugin';
+import withPWA from 'next-pwa';
 import './src/libs/Env';
 
 const withNextIntl = createNextIntlPlugin('./src/libs/i18n.ts');
@@ -49,4 +49,5 @@ export default withPWAConfigured(bundleAnalyzer(
         },
       },
     }),
-  })));
+  }),
+));

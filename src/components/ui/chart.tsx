@@ -16,7 +16,7 @@ export type ChartConfig = {
   } & (
     | { color?: string; theme?: never }
     | { color?: never; theme: Record<keyof typeof THEMES, string> }
-  )
+  );
 };
 
 type ChartContextProps = {
@@ -46,6 +46,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 
   return (
     <style
+      // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml -- Required for dynamic CSS variable injection
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
@@ -68,17 +69,24 @@ ${colorConfig
   );
 };
 
-const ChartContainer = ({ ref, id, className, children, config, ...props }: React.ComponentProps<'div'> & {
+const ChartContainer = ({
+  ref,
+  id,
+  className,
+  children,
+  config,
+  ...props
+}: React.ComponentProps<'div'> & {
   config: ChartConfig;
-  children: React.ComponentProps<
-      typeof ResponsiveContainer
-  >['children'];
+  children: React.ComponentProps<typeof ResponsiveContainer>['children'];
 } & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const uniqueId = React.useId();
   const chartId = `chart-${id || uniqueId.replace(/:/g, '')}`;
 
+  const contextValue = React.useMemo(() => ({ config }), [config]);
+
   return (
-    <ChartContext value={{ config }}>
+    <ChartContext value={contextValue}>
       <div
         data-chart={chartId}
         ref={ref}
@@ -89,9 +97,7 @@ const ChartContainer = ({ ref, id, className, children, config, ...props }: Reac
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <ResponsiveContainer>
-          {children}
-        </ResponsiveContainer>
+        <ResponsiveContainer>{children}</ResponsiveContainer>
       </div>
     </ChartContext>
   );
@@ -100,16 +106,29 @@ ChartContainer.displayName = 'Chart';
 
 const ChartTooltip = Tooltip;
 
-const ChartTooltipContent = (
-  { ref, active, payload, className, indicator = 'dot', hideLabel = false, hideIndicator = false, label, labelFormatter, labelClassName, formatter, color, nameKey, labelKey }: React.ComponentProps<typeof Tooltip>
-    & React.ComponentProps<'div'> & {
-      hideLabel?: boolean;
-      hideIndicator?: boolean;
-      indicator?: 'line' | 'dot' | 'dashed';
-      nameKey?: string;
-      labelKey?: string;
-    } & { ref?: React.RefObject<HTMLDivElement | null> },
-) => {
+const ChartTooltipContent = ({
+  ref,
+  active,
+  payload,
+  className,
+  indicator = 'dot',
+  hideLabel = false,
+  hideIndicator = false,
+  label,
+  labelFormatter,
+  labelClassName,
+  formatter,
+  color,
+  nameKey,
+  labelKey,
+}: React.ComponentProps<typeof Tooltip>
+  & React.ComponentProps<'div'> & {
+    hideLabel?: boolean;
+    hideIndicator?: boolean;
+    indicator?: 'line' | 'dot' | 'dashed';
+    nameKey?: string;
+    labelKey?: string;
+  } & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const { config } = useChart();
 
   const tooltipLabel = React.useMemo(() => {
@@ -198,7 +217,7 @@ const ChartTooltipContent = (
                                       'h-2.5 w-2.5': indicator === 'dot',
                                       'w-1': indicator === 'line',
                                       'w-0 border-[1.5px] border-dashed bg-transparent':
-                                  indicator === 'dashed',
+                                indicator === 'dashed',
                                       'my-0.5': nestLabel && indicator === 'dashed',
                                     },
                                   )}
@@ -242,13 +261,18 @@ ChartTooltipContent.displayName = 'ChartTooltip';
 
 const ChartLegend = Legend;
 
-const ChartLegendContent = (
-  { ref, className, hideIcon = false, payload, verticalAlign = 'bottom', nameKey }: React.ComponentProps<'div'>
-    & Pick<LegendProps, 'payload' | 'verticalAlign'> & {
-      hideIcon?: boolean;
-      nameKey?: string;
-    } & { ref?: React.RefObject<HTMLDivElement | null> },
-) => {
+const ChartLegendContent = ({
+  ref,
+  className,
+  hideIcon = false,
+  payload,
+  verticalAlign = 'bottom',
+  nameKey,
+}: React.ComponentProps<'div'>
+  & Pick<LegendProps, 'payload' | 'verticalAlign'> & {
+    hideIcon?: boolean;
+    nameKey?: string;
+  } & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const { config } = useChart();
 
   if (!payload?.length) {

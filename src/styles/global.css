@@ -383,6 +383,16 @@
   ::-webkit-scrollbar-thumb:hover {
     background-color: color-mix(in srgb, var(--color-muted-foreground) 30%, transparent);
   }
+
+  /* Hide scrollbar for trending categories */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer components {
