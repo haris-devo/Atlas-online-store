@@ -4,7 +4,7 @@
 
 @theme {
   /* Font Family */
-  --font-family-sans: var(--font-inter, Inter), system-ui, sans-serif;
+  --font-family-sans: var(--font-metropolis, Metropolis), var(--font-inter, Inter), system-ui, sans-serif;
   --font-family-mono: ui-monospace, monospace;
 
   /* Font Sizes */
@@ -396,6 +396,107 @@
 }
 
 @layer components {
+  /* Metropolis Font Classes - Complete Weight Range */
+  .font-metropolis-thin {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 100;
+  }
+
+  .font-metropolis-extralight {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 200;
+  }
+
+  .font-metropolis-light {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 300;
+  }
+
+  .font-metropolis {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 400;
+  }
+
+  .font-metropolis-medium {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 500;
+  }
+
+  .font-metropolis-semibold {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 600;
+  }
+
+  .font-metropolis-bold {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 700;
+  }
+
+  .font-metropolis-extrabold {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 800;
+  }
+
+  .font-metropolis-black {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 900;
+  }
+
+  /* Italic Variants */
+  .font-metropolis-thin-italic {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 100;
+    font-style: italic;
+  }
+
+  .font-metropolis-extralight-italic {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 200;
+    font-style: italic;
+  }
+
+  .font-metropolis-light-italic {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .font-metropolis-italic {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .font-metropolis-medium-italic {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  .font-metropolis-semibold-italic {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .font-metropolis-bold-italic {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  .font-metropolis-extrabold-italic {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 800;
+    font-style: italic;
+  }
+
+  .font-metropolis-black-italic {
+    font-family: var(--font-metropolis, Metropolis), sans-serif;
+    font-weight: 900;
+    font-style: italic;
+  }
+
   /* Futuristic Glassmorphism */
   .glass {
     background-color: rgb(255 255 255 / 0.05);

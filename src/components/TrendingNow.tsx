@@ -127,6 +127,7 @@ export function TrendingNow() {
         {/* Navigation Arrows */}
         <div className="flex items-center gap-2">
           <button
+            type="button"
             onClick={scrollLeft}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EAD99C] text-gray-600 transition-all duration-200 hover:bg-[#D4C47A] hover:text-gray-800"
             aria-label="Scroll left"
@@ -134,6 +135,7 @@ export function TrendingNow() {
             <ChevronLeft className="h-4 w-4" />
           </button>
           <button
+            type="button"
             onClick={scrollRight}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C7A84A] text-white transition-all duration-200 hover:bg-[#B8963A]"
             aria-label="Scroll right"

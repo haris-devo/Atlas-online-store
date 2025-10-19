@@ -1,6 +1,7 @@
 'use client';
 
 import X from 'lucide-react/dist/esm/icons/x';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -13,25 +14,19 @@ type CountdownTime = {
 
 export function PromoBanner() {
   const [isVisible, setIsVisible] = useState(() => {
-    // Initialize visibility based on localStorage
-    if (typeof window === 'undefined') {
+    if (typeof globalThis.window === 'undefined') {
       return true;
     }
-    const dismissed = localStorage.getItem('promo-banner-dismissed');
+    const dismissed = globalThis.localStorage.getItem('promo-banner-dismissed');
     return dismissed !== 'true';
   });
+
   const [countdown, setCountdown] = useState<CountdownTime>({
     days: 11,
     hours: 16,
     minutes: 55,
     seconds: 50,
   });
-
-  // Check localStorage on mount
-  useEffect(() => {
-    // This effect is now redundant since we initialize state properly
-    // But keeping it for any future logic that might be needed
-  }, []);
 
   // Countdown timer effect
   useEffect(() => {
@@ -68,7 +63,7 @@ export function PromoBanner() {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    localStorage.setItem('promo-banner-dismissed', 'true');
+    globalThis.localStorage.setItem('promo-banner-dismissed', 'true');
   };
 
   if (!isVisible) {
@@ -77,89 +72,74 @@ export function PromoBanner() {
 
   return (
     <div className="relative w-full overflow-hidden">
-      {/* Main banner with red background and decorative circles */}
-      <div className="relative bg-red-600 px-6 py-4">
+      {/* Main banner */}
+      <div className="relative px-4 py-2">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=60&fit=crop&crop=center"
+            alt="Promotional banner background"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+        </div>
+
+        {/* Red overlay */}
+        <div className="absolute inset-0 bg-red-600/90" />
+
         <div className="mx-auto max-w-7xl">
-          {/* Decorative circles */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-2 left-4 h-2 w-2 rounded-full bg-red-500/30"></div>
-            <div className="absolute top-6 left-12 h-1 w-1 rounded-full bg-red-500/40"></div>
-            <div className="absolute top-3 left-20 h-1.5 w-1.5 rounded-full bg-red-500/25"></div>
-            <div className="absolute top-8 left-32 h-1 w-1 rounded-full bg-red-500/35"></div>
-            <div className="absolute top-2 left-48 h-2 w-2 rounded-full bg-red-500/20"></div>
-            <div className="absolute top-5 left-64 h-1 w-1 rounded-full bg-red-500/30"></div>
-            <div className="absolute top-7 left-80 h-1.5 w-1.5 rounded-full bg-red-500/25"></div>
-            <div className="absolute top-3 left-96 h-1 w-1 rounded-full bg-red-500/40"></div>
-            <div className="absolute top-6 left-[28rem] h-2 w-2 rounded-full bg-red-500/20"></div>
-            <div className="absolute top-2 left-[32rem] h-1 w-1 rounded-full bg-red-500/35"></div>
-            <div className="absolute top-8 left-[36rem] h-1.5 w-1.5 rounded-full bg-red-500/25"></div>
-            <div className="absolute top-4 left-[40rem] h-1 w-1 rounded-full bg-red-500/30"></div>
-            <div className="absolute top-7 left-[44rem] h-2 w-2 rounded-full bg-red-500/20"></div>
-            <div className="absolute top-3 left-[48rem] h-1 w-1 rounded-full bg-red-500/40"></div>
-            <div className="absolute top-5 left-[52rem] h-1.5 w-1.5 rounded-full bg-red-500/25"></div>
-            <div className="absolute top-8 left-[56rem] h-1 w-1 rounded-full bg-red-500/35"></div>
-            <div className="absolute top-2 left-[60rem] h-2 w-2 rounded-full bg-red-500/20"></div>
-            <div className="absolute top-6 left-[64rem] h-1 w-1 rounded-full bg-red-500/30"></div>
-            <div className="absolute top-4 left-[68rem] h-1.5 w-1.5 rounded-full bg-red-500/25"></div>
-            <div className="absolute top-7 left-[72rem] h-1 w-1 rounded-full bg-red-500/40"></div>
-            <div className="absolute top-3 left-[76rem] h-2 w-2 rounded-full bg-red-500/20"></div>
-            <div className="absolute top-5 left-[80rem] h-1 w-1 rounded-full bg-red-500/35"></div>
-            <div className="absolute top-8 left-[84rem] h-1.5 w-1.5 rounded-full bg-red-500/25"></div>
-            <div className="absolute top-2 left-[88rem] h-1 w-1 rounded-full bg-red-500/30"></div>
-            <div className="absolute top-6 left-[92rem] h-2 w-2 rounded-full bg-red-500/20"></div>
-            <div className="absolute top-4 left-[96rem] h-1 w-1 rounded-full bg-red-500/40"></div>
-          </div>
-
-          {/* Content */}
-          <div className="relative z-10 flex items-center justify-between">
-            {/* Left: Promotional text */}
-            <div className="text-white">
-              <span className="text-sm font-normal">
-                EXTRA SALE 20% OFF + Free Express Shipping on order $991
-              </span>
+          <div className="relative z-10 flex items-center justify-between gap-4">
+            {/* Promotional text */}
+            <div className="text-white text-xs font-medium">
+              EXTRA SALE 20% OFF + Free Express Shipping on order $991
             </div>
 
-            {/* Middle-left: Promo code */}
-            <div className="text-white">
-              <span className="text-sm font-normal">Promo Code: </span>
-              <span className="text-lg font-semibold">SAVE 30</span>
+            {/* Promo code */}
+            <div className="text-white text-xs">
+              <span className="font-normal">Promo Code: </span>
+              <span className="font-bold text-sm">SAVE 30</span>
             </div>
 
-            {/* Middle-right: Countdown timer */}
+            {/* Countdown timer */}
             <div className="text-white">
-              <div className="flex items-center space-x-1">
+              <div className="flex items-center gap-1">
                 <div className="text-center">
-                  <div className="text-xl font-bold">
+                  <div className="text-sm font-bold">
                     {countdown.days.toString().padStart(2, '0')}
                   </div>
-                  <div className="text-xs font-normal">DAYS</div>
+                  <div className="text-xs font-normal">D</div>
                 </div>
-                <div className="text-xl font-bold">:</div>
+                <div className="text-sm font-bold">:</div>
                 <div className="text-center">
-                  <div className="text-xl font-bold">
+                  <div className="text-sm font-bold">
                     {countdown.hours.toString().padStart(2, '0')}
                   </div>
-                  <div className="text-xs font-normal">HRS</div>
+                  <div className="text-xs font-normal">H</div>
                 </div>
-                <div className="text-xl font-bold">:</div>
+                <div className="text-sm font-bold">:</div>
                 <div className="text-center">
-                  <div className="text-xl font-bold">
+                  <div className="text-sm font-bold">
                     {countdown.minutes.toString().padStart(2, '0')}
                   </div>
-                  <div className="text-xs font-normal">MIN</div>
+                  <div className="text-xs font-normal">M</div>
                 </div>
-                <div className="text-xl font-bold">:</div>
+                <div className="text-sm font-bold">:</div>
                 <div className="text-center">
-                  <div className="text-xl font-bold">
+                  <div className="text-sm font-bold">
                     {countdown.seconds.toString().padStart(2, '0')}
                   </div>
-                  <div className="text-xs font-normal">SEC</div>
+                  <div className="text-xs font-normal">S</div>
                 </div>
               </div>
             </div>
 
-            {/* Right: Buy Now button */}
-            <Button className="bg-yellow-400 text-black hover:bg-yellow-500 font-normal px-6 py-2 rounded-md">
+            {/* Buy Now button */}
+            <Button
+              size="sm"
+              className="bg-yellow-400 text-black hover:bg-yellow-500 font-medium px-3 py-1 h-7 text-xs"
+            >
               Buy Now
             </Button>
 
@@ -167,17 +147,14 @@ export function PromoBanner() {
             <button
               type="button"
               onClick={handleDismiss}
-              className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+              className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
               aria-label="Close banner"
             >
-              <X className="h-4 w-4 text-white" />
+              <X className="h-3 w-3 text-white" />
             </button>
           </div>
         </div>
       </div>
-
-      {/* Dark green bottom section */}
-      <div className="h-3 bg-green-800"></div>
     </div>
   );
 }

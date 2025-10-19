@@ -1,6 +1,7 @@
 'use client';
 
 import type { CarouselApi } from '@/components/ui/carousel';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +17,7 @@ type TechDealSlide = {
   title: string;
   subtitle: string;
   buttonText: string;
+  image: string;
   overlayOpacity: number;
 };
 
@@ -30,6 +32,8 @@ export function LimitedTimeTechDeals() {
       title: 'Limited Time Tech Deals',
       subtitle: 'Up to 50% off on premium electronics and accessories',
       buttonText: 'Shop Now',
+      image:
+        'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1200&h=400&fit=crop&crop=center',
       overlayOpacity: 0.7,
     },
     {
@@ -37,6 +41,8 @@ export function LimitedTimeTechDeals() {
       title: 'Gaming Gear Sale',
       subtitle: 'High-performance gaming equipment at unbeatable prices',
       buttonText: 'Explore Gaming',
+      image:
+        'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=1200&h=400&fit=crop&crop=center',
       overlayOpacity: 0.7,
     },
     {
@@ -44,6 +50,8 @@ export function LimitedTimeTechDeals() {
       title: 'Smart Home Essentials',
       subtitle: 'Transform your home with cutting-edge smart technology',
       buttonText: 'Discover More',
+      image:
+        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=400&fit=crop&crop=center',
       overlayOpacity: 0.7,
     },
   ];
@@ -55,12 +63,12 @@ export function LimitedTimeTechDeals() {
 
     const updateCount = () => {
       const newCount = api.scrollSnapList().length;
-      setCount(newCount);
+      setCount(() => newCount);
     };
 
     const updateCurrent = () => {
       const newCurrent = api.selectedScrollSnap() + 1;
-      setCurrent(newCurrent);
+      setCurrent(() => newCurrent);
     };
 
     updateCount();
@@ -94,99 +102,16 @@ export function LimitedTimeTechDeals() {
             <CarouselItem key={slide.id} className="pl-0">
               {/* Main Banner */}
               <div className="relative h-[400px] w-full">
-                {/* Background with Tech Products */}
-                <div className="absolute inset-0 bg-gradient-to-r from-stone-100 to-stone-200">
-                  {/* Tech Products Layout - Matching the image exactly */}
-
-                  {/* Small potted plant - Top Left */}
-                  <div className="absolute top-8 left-8 h-12 w-12 rounded-full bg-green-400/60 flex items-center justify-center">
-                    <div className="h-8 w-8 rounded-full bg-green-500/80"></div>
-                  </div>
-
-                  {/* Sony Headphones - Center */}
-                  <div className="absolute top-16 left-1/2 -translate-x-1/2">
-                    <div className="relative">
-                      {/* Headphone band */}
-                      <div className="h-2 w-24 bg-gray-800 rounded-full"></div>
-                      {/* Left earcup */}
-                      <div className="absolute -left-8 top-0 h-8 w-8 bg-gray-800 rounded-full"></div>
-                      {/* Right earcup (facing up as in image) */}
-                      <div className="absolute -right-8 top-0 h-8 w-8 bg-gray-800 rounded-full"></div>
-                      {/* Cable */}
-                      <div className="absolute -right-12 top-4 h-16 w-1 bg-gray-600"></div>
-                      {/* Sony branding */}
-                      <div className="absolute -left-6 top-2 text-xs font-bold text-gray-800">
-                        SONY
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Logitech Keyboard - Mid-ground */}
-                  <div className="absolute top-32 left-1/2 -translate-x-1/2">
-                    <div className="relative">
-                      {/* Keyboard base */}
-                      <div className="h-8 w-48 bg-gray-800 rounded-lg"></div>
-                      {/* Keys */}
-                      <div className="absolute top-1 left-2 grid grid-cols-10 gap-1">
-                        <div className="h-1.5 w-1.5 bg-gray-600 rounded text-xs flex items-center justify-center">
-                          Q
-                        </div>
-                        <div className="h-1.5 w-1.5 bg-gray-600 rounded text-xs flex items-center justify-center">
-                          W
-                        </div>
-                        <div className="h-1.5 w-1.5 bg-gray-600 rounded text-xs flex items-center justify-center">
-                          A
-                        </div>
-                        <div className="h-1.5 w-1.5 bg-gray-600 rounded text-xs flex items-center justify-center">
-                          S
-                        </div>
-                        <div className="h-1.5 w-1.5 bg-gray-600 rounded text-xs flex items-center justify-center">
-                          D
-                        </div>
-                        <div className="h-1.5 w-3 bg-gray-600 rounded text-xs flex items-center justify-center">
-                          back
-                        </div>
-                        <div className="h-1.5 w-3 bg-gray-600 rounded text-xs flex items-center justify-center">
-                          invio
-                        </div>
-                        <div className="h-1.5 w-1.5 bg-gray-600 rounded text-xs flex items-center justify-center">
-                          !
-                        </div>
-                        <div className="h-1.5 w-1.5 bg-gray-600 rounded text-xs flex items-center justify-center">
-                          @
-                        </div>
-                        <div className="h-1.5 w-1.5 bg-gray-600 rounded text-xs flex items-center justify-center">
-                          #
-                        </div>
-                      </div>
-                      {/* Logitech branding */}
-                      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs font-bold text-gray-800">
-                        logitech
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Logitech Mouse - Right side, positioned vertically */}
-                  <div className="absolute top-24 right-16">
-                    <div className="relative">
-                      {/* Mouse body */}
-                      <div className="h-16 w-10 bg-gray-600 rounded-lg transform rotate-12"></div>
-                      {/* Scroll wheel */}
-                      <div className="absolute top-2 left-1/2 -translate-x-1/2 h-1 w-6 bg-gray-400 rounded-full"></div>
-                      {/* Thumb rest */}
-                      <div className="absolute bottom-2 right-1 h-3 w-2 bg-gray-500 rounded"></div>
-                      {/* Logitech branding */}
-                      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs font-bold text-gray-800">
-                        logi
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Additional scattered tech elements */}
-                  <div className="absolute top-40 left-16 h-6 w-6 rounded-lg bg-gray-500/20"></div>
-                  <div className="absolute top-36 left-32 h-4 w-4 rounded-full bg-gray-300/25"></div>
-                  <div className="absolute top-44 left-48 h-8 w-8 rounded bg-gray-400/20"></div>
-                  <div className="absolute top-32 left-64 h-10 w-10 rounded-lg bg-gray-500/30"></div>
+                {/* Background Image */}
+                <div className="absolute inset-0">
+                  <Image
+                    src={slide.image}
+                    alt={slide.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
+                    priority
+                  />
                 </div>
 
                 {/* Dark Overlay - covers left two-thirds */}

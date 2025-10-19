@@ -41,9 +41,9 @@ export function Navbar() {
   };
 
   return (
-    <nav className="w-full bg-[#007557] text-white">
+    <nav className="w-full bg-[#006B3F] text-white py-4">
       {/* Main Navigation Bar */}
-      <div className="border-b border-[#006648]">
+      <div className="border-b border-[#006648] pb-4">
         <div className="mx-auto flex h-14 max-w-[1440px] items-center gap-4 px-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
@@ -98,6 +98,7 @@ export function Navbar() {
                 value={searchQuery}
                 onChange={handleSearchChange}
                 className="h-10 w-full rounded-r-none border-0 bg-white pr-20 text-sm text-gray-900 placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0"
+                style={{ borderRadius: '4px 0 0 4px' }}
               />
               <div className="absolute right-0 top-0 flex h-10 items-center gap-1 pr-1">
                 <button
@@ -119,6 +120,7 @@ export function Navbar() {
             <Button
               type="submit"
               className="h-10 rounded-l-none bg-[#FFA500] px-6 text-white hover:bg-[#FF8C00]"
+              style={{ borderRadius: '0 4px 4px 0' }}
             >
               <Search className="h-5 w-5" />
             </Button>
@@ -159,8 +161,8 @@ export function Navbar() {
       </div>
 
       {/* Secondary Navigation Bar */}
-      <div className="bg-[#006648]">
-        <div className="mx-auto flex h-10 max-w-[1440px] items-center justify-between px-4">
+      <div className="bg-[#004026] mx-auto max-w-[1440px]">
+        <div className="mx-auto flex h-10 max-w-[1440px] items-center justify-between px-4 mx-4">
           {/* Left Side Categories */}
           <div className="flex items-center gap-6">
             {categories.map(category => (

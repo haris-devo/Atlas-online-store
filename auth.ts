@@ -67,15 +67,15 @@ export const authConfig: NextAuthConfig = {
       if (account && user) {
         token.accessToken
           = account.provider === 'credentials'
-            ? user.accessToken
+            ? (user as any).accessToken
             : account.access_token;
-        token.refreshToken = user.refreshToken;
-        token.accessTokenExpires = user.accessTokenExpires;
+        token.refreshToken = (user as any).refreshToken;
+        token.accessTokenExpires = (user as any).accessTokenExpires;
         token.user = {
           id: user.id ?? '',
           email: user.email ?? '',
           name: user.name ?? '',
-          role: user.role || 'user',
+          role: (user as any).role || 'user',
         };
       }
 
@@ -104,15 +104,15 @@ export const authConfig: NextAuthConfig = {
         && typeof token.accessTokenExpires === 'number'
         && Date.now() < token.accessTokenExpires
       ) {
-        session.accessToken = token.accessToken;
-        session.error = undefined;
+        (session as any).accessToken = token.accessToken;
+        (session as any).error = undefined;
         return session;
       } else {
         const response = await refreshAccessToken(token);
         token.accessToken = response.accessToken;
       }
-      session.accessToken = token.accessToken;
-      session.error = token.error;
+      (session as any).accessToken = token.accessToken;
+      (session as any).error = token.error;
       return session;
     },
   },

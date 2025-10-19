@@ -1,9 +1,6 @@
 ---
-title: Core Development Principles
-type: always
-description: Fundamental principles that govern all code in this project
+alwaysApply: true
 ---
-
 # Core Development Principles
 
 ## Philosophy
@@ -24,6 +21,7 @@ You are an expert senior software engineer specializing in modern web developmen
 2. **Plan the Solution**: Break down complex tasks into smaller, manageable steps
 3. **Check Dependencies**: Verify all required packages are in package.json
 4. **Follow Existing Patterns**: Match the style and structure of the codebase
+5. **Use Existing UI Components First**: Always check `@/components/ui/` before creating custom components
 
 ### Code Quality Standards
 
@@ -33,6 +31,113 @@ You are an expert senior software engineer specializing in modern web developmen
 - **No Hardcoded Strings**: Use configuration files or constants
 - **No TODO Comments**: Either fix it now or create an issue
 
+### UI Component Usage Priority
+
+Always follow this hierarchy when building UI components:
+
+1. **Use Existing UI Components First**: Check `@/components/ui/` for shadcn/ui components
+2. **Extend Existing Components**: Modify existing components with variants or props
+3. **Create Custom Components**: Only when existing components don't meet requirements
+
+```typescript
+// ✅ Good: Use existing UI components
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+
+export function UserForm() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>User Information</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Input placeholder="Enter name" />
+        <Button>Submit</Button>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ✅ Good: Extend existing components with variants
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+
+interface CustomButtonProps extends React.ComponentProps<typeof Button> {
+  variant?: 'primary' | 'secondary' | 'danger';
+}
+
+export function CustomButton({ variant = 'primary', className, ...props }: CustomButtonProps) {
+  return (
+    <Button
+      className={cn(
+        variant === 'primary' && 'bg-blue-600 hover:bg-blue-700',
+        variant === 'secondary' && 'bg-gray-600 hover:bg-gray-700',
+        variant === 'danger' && 'bg-red-600 hover:bg-red-700',
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+// ❌ Bad: Creating custom components when UI components exist
+export function CustomButton() {
+  return (
+    <button className="bg-blue-600 text-white px-4 py-2 rounded">
+      Click me
+    </button>
+  );
+}
+```
+
+**Available UI Components**: Always check these before creating custom ones:
+
+- `@/components/ui/button` - Buttons with variants
+- `@/components/ui/card` - Card layouts
+- `@/components/ui/input` - Form inputs
+- `@/components/ui/form` - Form components with validation
+- `@/components/ui/dialog` - Modal dialogs
+- `@/components/ui/dropdown-menu` - Dropdown menus
+- `@/components/ui/table` - Data tables
+- `@/components/ui/badge` - Status badges
+- `@/components/ui/alert` - Alert messages
+- `@/components/ui/avatar` - User avatars
+- `@/components/ui/checkbox` - Checkboxes
+- `@/components/ui/radio-group` - Radio buttons
+- `@/components/ui/select` - Select dropdowns
+- `@/components/ui/textarea` - Text areas
+- `@/components/ui/tooltip` - Tooltips
+- `@/components/ui/skeleton` - Loading skeletons
+- `@/components/ui/separator` - Visual separators
+- `@/components/ui/sheet` - Side panels
+- `@/components/ui/tabs` - Tab navigation
+- `@/components/ui/accordion` - Collapsible content
+- `@/components/ui/calendar` - Date pickers
+- `@/components/ui/popover` - Popover content
+- `@/components/ui/command` - Command palettes
+- `@/components/ui/navigation-menu` - Navigation menus
+- `@/components/ui/breadcrumb` - Breadcrumb navigation
+- `@/components/ui/pagination` - Pagination controls
+- `@/components/ui/progress` - Progress indicators
+- `@/components/ui/slider` - Range sliders
+- `@/components/ui/switch` - Toggle switches
+- `@/components/ui/toggle` - Toggle buttons
+- `@/components/ui/toggle-group` - Toggle groups
+- `@/components/ui/scroll-area` - Custom scrollbars
+- `@/components/ui/resizable` - Resizable panels
+- `@/components/ui/hover-card` - Hover cards
+- `@/components/ui/context-menu` - Context menus
+- `@/components/ui/menubar` - Menu bars
+- `@/components/ui/alert-dialog` - Alert dialogs
+- `@/components/ui/drawer` - Mobile drawers
+- `@/components/ui/aspect-ratio` - Aspect ratio containers
+- `@/components/ui/carousel` - Image carousels
+- `@/components/ui/chart` - Data visualization
+- `@/components/ui/input-otp` - OTP inputs
+- `@/components/ui/sidebar` - Sidebar layouts
+- `@/components/ui/sonner` - Toast notifications
+
 ### Error Handling
 
 ```typescript
@@ -40,14 +145,14 @@ You are an expert senior software engineer specializing in modern web developmen
 async function fetchUserData(userId: string) {
   try {
     const response = await fetch(`/api/users/${userId}`);
-    
+
     if (!response.ok) {
       throw new Error(`Failed to fetch user: ${response.statusText}`);
     }
-    
+
     return await response.json();
   } catch (error) {
-    Logger.error('Failed to fetch user data', { userId, error });
+    Logger.error("Failed to fetch user data", { userId, error });
     throw error;
   }
 }
@@ -65,22 +170,22 @@ Always organize imports in this order:
 
 ```typescript
 // 1. External dependencies
-import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 // 2. Internal dependencies (absolute imports with @/)
-import { Button } from '@/components/ui/button';
-import { useCounterStore } from '@/stores/useCounterStore';
-import { Logger } from '@/libs/Logger';
+import { Button } from "@/components/ui/button";
+import { useCounterStore } from "@/stores/useCounterStore";
+import { Logger } from "@/libs/Logger";
 
 // 3. Types
-import type { User } from '@/types/user';
+import type { User } from "@/types/user";
 
 // 4. Relative imports
-import { localHelper } from './helpers';
+import { localHelper } from "./helpers";
 
 // 5. Styles
-import './styles.css';
+import "./styles.css";
 ```
 
 ### Code Organization
@@ -101,13 +206,13 @@ const DEBOUNCE_DELAY = 300;
 export function Component({ title, onSubmit }: ComponentProps) {
   // 3a. Hooks
   const [state, setState] = useState();
-  
+
   // 3b. Derived state
   const isValid = state !== null;
-  
+
   // 3c. Event handlers
   const handleSubmit = () => {};
-  
+
   // 3d. Render
   return <div>{/* ... */}</div>;
 }
@@ -121,7 +226,7 @@ function helper() {}
 
 ### Naming Conventions
 
-- **Files**: 
+- **Files**:
   - Components: PascalCase (`UserProfile.tsx`)
   - Utilities: camelCase (`formatDate.ts`)
   - Types: PascalCase (`UserTypes.ts`)
@@ -189,11 +294,11 @@ function processUser(user: User | null) {
   if (!user) {
     return null;
   }
-  
+
   if (!user.isActive) {
     return <InactiveUser />;
   }
-  
+
   return <ActiveUser user={user} />;
 }
 

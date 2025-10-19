@@ -7,6 +7,57 @@ description: Tailwind CSS best practices and patterns
 
 # Styling with Tailwind CSS
 
+## UI Component Priority
+
+**Always use existing UI components first** before creating custom styled components:
+
+```typescript
+// ✅ Good: Use existing UI components
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+export function UserCard({ user }: { user: User }) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{user.name}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p>{user.email}</p>
+        <Button>Edit Profile</Button>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ✅ Good: Extend existing components with Tailwind classes
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+
+export function CustomButton({ className, ...props }: ButtonProps) {
+  return (
+    <Button
+      className={cn(
+        'bg-gradient-to-r from-blue-500 to-purple-600',
+        'hover:from-blue-600 hover:to-purple-700',
+        'shadow-lg hover:shadow-xl',
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+// ❌ Bad: Creating custom components when UI components exist
+export function CustomButton({ children }: { children: React.ReactNode }) {
+  return (
+    <button className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+      {children}
+    </button>
+  );
+}
+```
+
 ## Utility-First Approach
 
 ```typescript
@@ -177,7 +228,7 @@ export function Card() {
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
   }
-  
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -205,7 +256,7 @@ export default {
         '18': '4.5rem',
         '112': '28rem',
       },
-      
+
       // Custom colors
       colors: {
         brand: {
@@ -215,13 +266,13 @@ export default {
           900: '#0c4a6e',
         },
       },
-      
+
       // Custom animations
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in',
         'slide-up': 'slideUp 0.3s ease-out',
       },
-      
+
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
@@ -302,8 +353,9 @@ export function Grid({ children }: { children: React.ReactNode }) {
 // It defeats the purpose of utility-first
 
 // ✅ Good: Group common patterns as components instead
-export const buttonBaseClasses = 'rounded-lg px-4 py-2 font-medium transition-colors';
-export const buttonPrimaryClasses = 'bg-blue-600 text-white hover:bg-blue-700';
+export const buttonBaseClasses =
+  "rounded-lg px-4 py-2 font-medium transition-colors";
+export const buttonPrimaryClasses = "bg-blue-600 text-white hover:bg-blue-700";
 ```
 
 ## Accessibility

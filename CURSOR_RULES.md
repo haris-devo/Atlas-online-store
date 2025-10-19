@@ -29,6 +29,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 ## 🎯 What These Rules Cover
 
 ### 1. **Core Development (Always Active)**
+
 - Code quality standards
 - Error handling patterns
 - Import organization
@@ -36,8 +37,10 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - DRY principles
 - Early returns
 - Performance mindset
+- UI component usage priority
 
 ### 2. **TypeScript (Auto-Attached)**
+
 - No `any` types - strict type safety
 - Interface vs Type usage
 - Generic types and utility types
@@ -46,6 +49,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Branded types
 
 ### 3. **React & Next.js (Auto-Attached)**
+
 - Server Components first
 - Async request APIs
 - Proper data fetching
@@ -54,6 +58,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Metadata API usage
 
 ### 4. **Code Style (Always Active)**
+
 - Consistent formatting
 - Naming conventions
 - JSX patterns
@@ -62,6 +67,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Array and object manipulation
 
 ### 5. **Architecture (Always Active)**
+
 - Component layer patterns
 - Service layer abstraction
 - Validation layer with Zod
@@ -70,6 +76,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Dependency injection
 
 ### 6. **Testing (Auto-Attached)**
+
 - Unit testing with Vitest
 - Component testing
 - E2E testing with Playwright
@@ -78,6 +85,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Accessibility testing
 
 ### 7. **Performance (Agent Requested)**
+
 - Core Web Vitals optimization
 - Image and font optimization
 - Code splitting
@@ -86,6 +94,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Bundle size optimization
 
 ### 8. **Security (Always Active)**
+
 - Authentication & authorization
 - Input validation
 - XSS prevention
@@ -95,6 +104,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Secure headers
 
 ### 9. **Accessibility (Auto-Attached)**
+
 - WCAG 2.1 Level AA compliance
 - Semantic HTML
 - ARIA labels
@@ -103,6 +113,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Screen reader support
 
 ### 10. **State Management (Auto-Attached)**
+
 - Zustand store patterns
 - When to use state management
 - Selector optimization
@@ -110,6 +121,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Testing stores
 
 ### 11. **Data Fetching (Auto-Attached)**
+
 - TanStack Query setup
 - Query key organization
 - Mutations with optimistic updates
@@ -118,6 +130,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Cache management
 
 ### 12. **Forms (Auto-Attached)**
+
 - React Hook Form patterns
 - Zod validation schemas
 - shadcn Form components
@@ -126,6 +139,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Server Actions integration
 
 ### 13. **Styling (Auto-Attached)**
+
 - Tailwind CSS utility-first
 - Component variants with CVA
 - Responsive design
@@ -134,6 +148,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Accessibility in styling
 
 ### 14. **i18n (Auto-Attached)**
+
 - next-intl patterns
 - Translation file structure
 - Locale switching
@@ -142,6 +157,7 @@ All Cursor rules are stored in `.cursor/rules/` directory:
 - Namespace organization
 
 ### 15. **Git Workflow (Manual Reference)**
+
 - Conventional commits
 - Branch naming
 - PR guidelines
@@ -172,6 +188,7 @@ Cursor AI automatically applies these rules based on:
 ### No Configuration Needed
 
 Just start coding! Cursor will:
+
 - ✅ Follow all best practices automatically
 - ✅ Suggest improvements based on rules
 - ✅ Generate code that matches project standards
@@ -181,6 +198,7 @@ Just start coding! Cursor will:
 ## 💡 Key Principles Enforced
 
 ### Type Safety
+
 ```typescript
 // ✅ Always use proper types
 function processUser(user: User): void {
@@ -194,6 +212,7 @@ function processUser(user: any): void {
 ```
 
 ### Server Components First
+
 ```typescript
 // ✅ Default to Server Components
 export default async function Page() {
@@ -210,6 +229,7 @@ export function InteractiveComponent() {
 ```
 
 ### Input Validation
+
 ```typescript
 // ✅ Always validate with Zod
 const schema = z.object({
@@ -221,6 +241,7 @@ const validatedData = schema.parse(input);
 ```
 
 ### Accessibility
+
 ```typescript
 // ✅ Proper ARIA labels
 <button aria-label="Delete item" onClick={handleDelete}>
@@ -229,13 +250,14 @@ const validatedData = schema.parse(input);
 ```
 
 ### Error Handling
+
 ```typescript
 // ✅ Explicit error handling
 try {
   const result = await riskyOperation();
   return result;
 } catch (error) {
-  Logger.error('Operation failed', { error });
+  Logger.error("Operation failed", { error });
   throw error;
 }
 ```
@@ -243,6 +265,7 @@ try {
 ## 📊 Benefits
 
 ### For Developers
+
 - 🎯 Consistent code quality
 - 🚀 Faster development with AI assistance
 - 📚 Built-in best practices
@@ -251,6 +274,7 @@ try {
 - 🧪 Testable code patterns
 
 ### For Teams
+
 - 📋 Standardized code style
 - 🤝 Easier code reviews
 - 📖 Self-documenting patterns
@@ -258,6 +282,7 @@ try {
 - 🎨 Consistent UI/UX
 
 ### For Projects
+
 - 🏗️ Clean architecture
 - 🔐 Secure by default
 - ⚡ Performance optimized
@@ -268,17 +293,22 @@ try {
 ## 🔍 Examples
 
 ### Creating a New Component
+
 Cursor will automatically:
-1. Use proper TypeScript types
-2. Apply accessibility standards
-3. Follow React 19 patterns
-4. Implement proper error handling
-5. Use Tailwind CSS correctly
-6. Support dark mode
-7. Be responsive
+
+1. Check existing UI components first (`@/components/ui/`)
+2. Use proper TypeScript types
+3. Apply accessibility standards
+4. Follow React 19 patterns
+5. Implement proper error handling
+6. Use Tailwind CSS correctly
+7. Support dark mode
+8. Be responsive
 
 ### Building a Form
+
 Cursor will automatically:
+
 1. Use React Hook Form
 2. Implement Zod validation
 3. Add proper error messages
@@ -288,7 +318,9 @@ Cursor will automatically:
 7. Add proper TypeScript types
 
 ### Writing Tests
+
 Cursor will automatically:
+
 1. Use Vitest for unit tests
 2. Follow testing best practices
 3. Test behavior, not implementation
@@ -306,6 +338,7 @@ Cursor will automatically:
 ## 🔄 Updating Rules
 
 To modify or add rules:
+
 1. Edit files in `.cursor/rules/`
 2. Follow MDC format with metadata
 3. Include practical examples
@@ -323,6 +356,7 @@ To modify or add rules:
 ## 🎓 Learning from Rules
 
 Use these rules as a learning resource:
+
 - 📖 Read through rule files to understand best practices
 - 🔍 See examples of proper patterns
 - 🤔 Understand the "why" behind decisions
@@ -332,6 +366,7 @@ Use these rules as a learning resource:
 ## 🤝 Contributing
 
 When contributing to this project:
+
 1. Cursor AI will guide you to follow these rules
 2. All PRs will be reviewed against these standards
 3. Automated checks enforce key rules
@@ -344,4 +379,3 @@ When contributing to this project:
 **Project**: CodeHuddle Frontend Boilerplate  
 **Last Updated**: October 2025  
 **Maintained by**: CodeHuddle Team
-

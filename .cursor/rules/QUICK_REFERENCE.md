@@ -1,29 +1,59 @@
 # Quick Reference Guide
 
+## UI Component Priority
+
+**Always check `@/components/ui/` first before creating custom components:**
+
+```typescript
+// ✅ Use existing UI components
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+
+// ✅ Extend existing components
+import { cn } from '@/lib/utils';
+
+export function CustomButton({ className, ...props }: ButtonProps) {
+  return (
+    <Button
+      className={cn('bg-gradient-to-r from-blue-500 to-purple-600', className)}
+      {...props}
+    />
+  );
+}
+
+// ❌ Don't create custom when UI components exist
+export function CustomButton() {
+  return <button className="bg-blue-600 text-white px-4 py-2">Click</button>;
+}
+```
+
 ## Essential Patterns
 
 ### Component Structure
+
 ```typescript
 export function Component({ prop }: Props) {
   // 1. Hooks
   const [state, setState] = useState();
   const { data } = useQuery(...);
-  
+
   // 2. Derived state
   const isValid = state !== null;
-  
+
   // 3. Event handlers
   const handleClick = () => {};
-  
+
   // 4. Early returns
   if (!data) return null;
-  
+
   // 5. Main render
   return <div>{data}</div>;
 }
 ```
 
 ### Server Component
+
 ```typescript
 export default async function Page() {
   const data = await fetchData();
@@ -32,6 +62,7 @@ export default async function Page() {
 ```
 
 ### Client Component
+
 ```typescript
 'use client';
 
@@ -42,6 +73,7 @@ export function ClientComponent() {
 ```
 
 ### Data Fetching (Server)
+
 ```typescript
 export default async function Page() {
   const [users, posts] = await Promise.all([
@@ -53,6 +85,7 @@ export default async function Page() {
 ```
 
 ### Data Fetching (Client)
+
 ```typescript
 'use client';
 
@@ -61,7 +94,7 @@ export function Component() {
     queryKey: ['key'],
     queryFn: fetchData,
   });
-  
+
   if (isLoading) return <Skeleton />;
   if (error) return <Error />;
   return <div>{data}</div>;
@@ -69,6 +102,7 @@ export function Component() {
 ```
 
 ### Form
+
 ```typescript
 'use client';
 
@@ -81,7 +115,7 @@ export function LoginForm() {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
-  
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -106,6 +140,7 @@ export function LoginForm() {
 ```
 
 ### State Management
+
 ```typescript
 export const useStore = create<State>((set) => ({
   count: 0,
@@ -118,15 +153,16 @@ const increment = useStore((state) => state.increment);
 ```
 
 ### Mutation
+
 ```typescript
 export function useUpdateUser() {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: updateUser,
     onSuccess: (user) => {
-      queryClient.invalidateQueries({ queryKey: ['users'] });
-      toast.success('Updated successfully');
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      toast.success("Updated successfully");
     },
   });
 }
@@ -135,6 +171,7 @@ export function useUpdateUser() {
 ## Code Quality Checklist
 
 ### Before Committing
+
 - [ ] No `any` types
 - [ ] No `console.log`
 - [ ] No magic numbers
@@ -149,6 +186,7 @@ export function useUpdateUser() {
 - [ ] Type check passes
 
 ### Component Checklist
+
 - [ ] Named export (not default)
 - [ ] Proper TypeScript types
 - [ ] Accessibility (ARIA labels)
@@ -161,6 +199,7 @@ export function useUpdateUser() {
 - [ ] Focus indicators
 
 ### Form Checklist
+
 - [ ] Zod validation schema
 - [ ] Proper labels
 - [ ] Error messages
@@ -173,17 +212,19 @@ export function useUpdateUser() {
 ## Common Patterns
 
 ### Error Handling
+
 ```typescript
 try {
   const result = await operation();
   return result;
 } catch (error) {
-  Logger.error('Operation failed', { error });
+  Logger.error("Operation failed", { error });
   throw error;
 }
 ```
 
 ### Async APIs
+
 ```typescript
 const cookieStore = await cookies();
 const headersList = await headers();
@@ -192,6 +233,7 @@ const searchParams = await props.searchParams;
 ```
 
 ### Conditional Rendering
+
 ```typescript
 // Early return
 if (!user) return null;
@@ -204,6 +246,7 @@ if (!user) return null;
 ```
 
 ### Styling
+
 ```typescript
 <div className={cn(
   'base-classes',
@@ -216,28 +259,30 @@ if (!user) return null;
 ```
 
 ## Import Order
+
 ```typescript
 // 1. External
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 // 2. Internal (@/)
-import { Button } from '@/components/ui/button';
-import { useStore } from '@/stores/useStore';
+import { Button } from "@/components/ui/button";
+import { useStore } from "@/stores/useStore";
 
 // 3. Types
-import type { User } from '@/types/user';
+import type { User } from "@/types/user";
 
 // 4. Relative
-import { helper } from './helpers';
+import { helper } from "./helpers";
 
 // 5. Styles
-import './styles.css';
+import "./styles.css";
 ```
 
 ## Naming Conventions
 
 ### Files
+
 - Components: `UserProfile.tsx`
 - Utilities: `formatDate.ts`
 - Types: `UserTypes.ts`
@@ -245,18 +290,21 @@ import './styles.css';
 - Directories: `user-profile/`
 
 ### Variables
+
 - Boolean: `isLoading`, `hasError`, `canEdit`
 - Event handlers: `handleClick`, `handleSubmit`
 - Constants: `MAX_FILE_SIZE`, `API_BASE_URL`
 - Regular: `userData`, `formValues`
 
 ### Functions
+
 - Pure: `calculateTotal`, `formatCurrency`
 - Components: `UserCard`, `LoginForm`
 
 ## Quick Commands
 
 ### Git
+
 ```bash
 npm run commit          # Commitizen
 git checkout -b feature/name
@@ -264,6 +312,7 @@ gh pr create
 ```
 
 ### Development
+
 ```bash
 npm run dev            # Start dev server
 npm run build          # Build production
@@ -275,6 +324,7 @@ npm run test:e2e       # E2E tests
 ```
 
 ### Testing
+
 ```bash
 npm run test           # Unit tests
 npm run test:e2e       # E2E tests
@@ -297,7 +347,7 @@ npm run storybook      # Storybook
 ❌ Direct DOM manipulation  
 ❌ Mutating state directly  
 ❌ Large components (split them)  
-❌ TODO comments in commits  
+❌ TODO comments in commits
 
 ## Resources
 
@@ -310,4 +360,3 @@ npm run storybook      # Storybook
 ---
 
 Keep this file handy as your daily reference guide!
-

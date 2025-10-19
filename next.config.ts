@@ -10,44 +10,59 @@ const bundleAnalyzer = withBundleAnalyzer({
 });
 
 /** @type {import('next').NextConfig} */
-const withPWAConfigured = withPWA({ dest: 'public', register: true, skipWaiting: true, disable: process.env.NODE_ENV === 'development' });
+const withPWAConfigured = withPWA({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+});
 
-export default withPWAConfigured(bundleAnalyzer(
-  withNextIntl({
-    eslint: {
-      dirs: ['.'],
-    },
-    poweredByHeader: false,
-    reactStrictMode: true,
-    serverExternalPackages: ['@electric-sql/pglite'],
-
-    // Performance optimizations
-    compress: true,
-
-    // Modularize imports to reduce bundle size
-    modularizeImports: {
-      'lucide-react': {
-        transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
-        skipDefaultConversion: true,
+export default withPWAConfigured(
+  bundleAnalyzer(
+    withNextIntl({
+      eslint: {
+        dirs: ['.'],
       },
-      '@radix-ui/react-icons': {
-        transform: '@radix-ui/react-icons/dist/{{member}}',
-      },
-    },
+      poweredByHeader: false,
+      reactStrictMode: true,
+      serverExternalPackages: ['@electric-sql/pglite'],
 
-    // Image optimization
-    images: {
-      formats: ['image/avif', 'image/webp'],
-      minimumCacheTTL: 60,
-    },
+      // Performance optimizations
+      compress: true,
 
-    // Production-only optimizations
-    ...(process.env.NODE_ENV === 'production' && {
-      compiler: {
-        removeConsole: {
-          exclude: ['error', 'warn'],
+      // Modularize imports to reduce bundle size
+      modularizeImports: {
+        'lucide-react': {
+          transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
+          skipDefaultConversion: true,
+        },
+        '@radix-ui/react-icons': {
+          transform: '@radix-ui/react-icons/dist/{{member}}',
         },
       },
+
+      // Image optimization
+      images: {
+        formats: ['image/avif', 'image/webp'],
+        minimumCacheTTL: 60,
+        remotePatterns: [
+          {
+            protocol: 'https',
+            hostname: 'images.unsplash.com',
+            port: '',
+            pathname: '/**',
+          },
+        ],
+      },
+
+      // Production-only optimizations
+      ...(process.env.NODE_ENV === 'production' && {
+        compiler: {
+          removeConsole: {
+            exclude: ['error', 'warn'],
+          },
+        },
+      }),
     }),
-  }),
-));
+  ),
+);
