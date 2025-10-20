@@ -10,10 +10,13 @@ import ShoppingCart from 'lucide-react/dist/esm/icons/shopping-cart';
 import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
 import User from 'lucide-react/dist/esm/icons/user';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { AllCategoriesDropdown } from './AllCategoriesDropdown';
+import { ImageSearchDialog } from './ImageSearchDialog';
+import { SearchDropdown } from './SearchDropdown';
 
 type Category = {
   label: string;
@@ -24,6 +27,11 @@ type Category = {
 
 export function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+  const categoriesRef = useRef<HTMLDivElement>(null);
   const cartItemCount = 2; // Example cart count
 
   const categories: Category[] = [
@@ -39,6 +47,59 @@ export function Navbar() {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
+
+  const handleSearchFocus = () => {
+    setIsSearchFocused(true);
+  };
+
+  const handleSearchBlur = () => {
+    // Delay to allow clicks on dropdown items
+    setTimeout(() => {
+      setIsSearchFocused(false);
+    }, 200);
+  };
+
+  const handleSelectSuggestion = (suggestion: string) => {
+    setSearchQuery(suggestion);
+    setIsSearchFocused(false);
+  };
+
+  const handleCloseDropdown = () => {
+    setIsSearchFocused(false);
+  };
+
+  const handleCameraClick = () => {
+    setIsImageDialogOpen(true);
+  };
+
+  const handleImageUpload = (_file: File) => {
+    // Handle image upload for visual search
+    // Here you would typically send the image to your search API
+    // For now, we'll just log it
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchContainerRef.current
+        && !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsSearchFocused(false);
+      }
+      if (
+        categoriesRef.current
+        && !categoriesRef.current.contains(event.target as Node)
+      ) {
+        setIsCategoriesOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav className="w-full bg-[#006B3F] text-white py-4">
@@ -91,31 +152,43 @@ export function Navbar() {
 
           {/* Search Bar */}
           <div className="flex flex-1 items-center">
-            <div className="relative w-full max-w-3xl">
+            <div ref={searchContainerRef} className="relative w-full max-w-3xl">
               <Input
                 type="text"
                 placeholder="wireless headphone"
                 value={searchQuery}
                 onChange={handleSearchChange}
-                className="h-10 w-full rounded-r-none border-0 bg-white pr-20 text-sm text-gray-900 placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0"
+                onFocus={handleSearchFocus}
+                onBlur={handleSearchBlur}
+                className="h-10 w-full rounded-r-none border-0 bg-white pr-20 text-sm text-gray-900 placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 transition-all duration-200 focus:shadow-md"
                 style={{ borderRadius: '4px 0 0 4px' }}
               />
               <div className="absolute right-0 top-0 flex h-10 items-center gap-1 pr-1">
                 <button
                   type="button"
-                  className="rounded p-2 hover:bg-gray-100"
+                  className="rounded p-2 transition-all duration-150 hover:bg-gray-100 hover:scale-110"
                   aria-label="Voice search"
                 >
                   <Mic className="h-4 w-4 text-gray-600" />
                 </button>
                 <button
                   type="button"
-                  className="rounded p-2 hover:bg-gray-100"
+                  className="rounded p-2 transition-all duration-150 hover:bg-gray-100 hover:scale-110"
                   aria-label="Image search"
+                  onClick={handleCameraClick}
                 >
                   <Camera className="h-4 w-4 text-gray-600" />
                 </button>
               </div>
+
+              {/* Search Dropdown */}
+              {isSearchFocused && (
+                <SearchDropdown
+                  searchQuery={searchQuery}
+                  onSelectSuggestion={handleSelectSuggestion}
+                  onClose={handleCloseDropdown}
+                />
+              )}
             </div>
             <Button
               type="submit"
@@ -161,16 +234,20 @@ export function Navbar() {
       </div>
 
       {/* Secondary Navigation Bar */}
-      <div className="bg-[#004026] mx-auto max-w-[1440px]">
-        <div className="mx-auto flex h-10 max-w-[1440px] items-center justify-between px-4 mx-4">
+      <div className="bg-[#004026] relative">
+        <div className="mx-auto flex h-10 max-w-[1440px] items-center justify-between px-4">
           {/* Left Side Categories */}
           <div className="flex items-center gap-6">
             {categories.map(category => (
-              <div key={category.label}>
+              <div
+                key={category.label}
+                ref={category.hasDropdown ? categoriesRef : null}
+              >
                 {category.hasDropdown
                   ? (
                       <button
                         type="button"
+                        onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
                         className="flex items-center gap-1 text-sm font-medium hover:opacity-80"
                       >
                         {category.icon && <category.icon className="h-4 w-4" />}
@@ -228,7 +305,20 @@ export function Navbar() {
             </Link>
           </div>
         </div>
+
+        {/* All Categories Dropdown */}
+        <AllCategoriesDropdown
+          isOpen={isCategoriesOpen}
+          onClose={() => setIsCategoriesOpen(false)}
+        />
       </div>
+
+      {/* Image Search Dialog */}
+      <ImageSearchDialog
+        isOpen={isImageDialogOpen}
+        onClose={() => setIsImageDialogOpen(false)}
+        onImageUpload={handleImageUpload}
+      />
     </nav>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
-import { logger } from '@/libs/Logger';
+import { Logger } from '@/libs/ClientLogger';
 
 type UseProductCardOptions = {
   onAddToCart?: (productId: string) => void;
@@ -18,7 +18,7 @@ export function useProductCard({
     (productId: string) => {
       if (enableAnalytics) {
         // Client-side logging - using console for now
-        logger.info({ productId }, 'Product added to cart');
+        Logger.info('Product added to cart', { productId });
       }
 
       onAddToCart?.(productId);
@@ -30,7 +30,7 @@ export function useProductCard({
     (productId: string) => {
       if (enableAnalytics) {
         // Client-side logging - using console for now
-        logger.info({ productId }, 'Product clicked');
+        Logger.info('Product clicked', { productId });
       }
 
       onProductClick?.(productId);
